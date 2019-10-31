@@ -22,6 +22,8 @@ class _HomePageState extends State<HomePage> {
   ///滑动
   var currentPage;
 
+  PageController controller;
+
 
 //  _HomePageState(){
 //    currentPage = imageList.length - 1;
@@ -30,9 +32,15 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
 
+    //currentPage = imageList.length - 1;
     // TODO: implement initState
     super.initState();
-
+    controller = PageController();
+    controller.addListener((){
+      setState(() {
+        currentPage = controller.page;
+      });
+    });
     _homeDao();
   }
 
@@ -40,9 +48,12 @@ class _HomePageState extends State<HomePage> {
   Future<Null> _homeDao() async {
     try {
       HomeBeanEntity model = await HomeDao.fetch();
-      setState(() {
-        imageList = model.images;
-      });
+          imageList = model.images;
+          controller.jumpToPage(imageList.length - 1);
+          setState(() {
+            currentPage = imageList.length - 1;
+          });
+
     } catch (e) {
       print(e);
 
@@ -52,13 +63,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    PageController controller = PageController(initialPage: imageList.length - 1);
-    controller.addListener(() {
-      //监听事件
-      setState(() {
-        currentPage = controller.page;
-      });
-    });
 
     return Scaffold(
       backgroundColor: Color(0xFF2d3447),
@@ -135,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     width: 15.0,
                   ),
-                  Text("25+ Stories",
+                  Text("8+ Stories",
                       style: TextStyle(color: Colors.blueAccent)),
                 ],
               ),
@@ -150,7 +154,8 @@ class _HomePageState extends State<HomePage> {
                     reverse: true,
                     itemBuilder: (context, index) {
 
-                      return Container();
+                      return Container(
+                      );
                     },
                   ),
                 )
@@ -193,10 +198,11 @@ class CardScrollWidget extends StatelessWidget {
 
           List<Widget> cardList = new List();
 
-          for(var i = 0; i < imageList.length - 1; i++){
+          for(var i = 0; i < imageList.length; i++){
             var delta = i - currentPage;
+            //var delta = i;
             bool isOnRight = delta > 0;
-            
+
             var start = padding +
                 max(primaryCardLeft - horizontalInset * -delta *(isOnRight ? 15 : 1)
                     ,0.0);
@@ -235,10 +241,13 @@ class CardScrollWidget extends StatelessWidget {
                                     padding: EdgeInsets.symmetric(horizontal: 16.0,vertical: 8.0),
                                     child: Text(
                                       imageList[i].copyright,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 3,
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 15.0,
-                                        fontFamily: "SF-Pro-Text-Regular"
+                                        fontFamily: "SF-Pro-Text-Regular",
+
                                       ),
                                     ),
                                 )

@@ -24,6 +24,7 @@ class HomeDao {
     if(response.statusCode == 200){
       Utf8Decoder utf8decoder = new Utf8Decoder(); //
       var result = json.decode(utf8decoder.convert(response.bodyBytes));
+      //print(result.toString());
       return HomeBeanEntity.fromJson(result);
     }else{
       throw Exception('Error=============!!!!!!');
