@@ -5,6 +5,8 @@ import 'package:flutter_phoenix/home/bean/home_bean_entity.dart';
 import 'package:flutter_phoenix/home/customIcons.dart';
 import 'dart:math';
 
+import 'package:flutter_phoenix/home/data.dart';
+
 const BING_HEAD = "https://cn.bing.com";
 
 class HomePage extends StatefulWidget {

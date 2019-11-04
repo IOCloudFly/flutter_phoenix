@@ -7,13 +7,14 @@ class VerticalText extends CustomPainter{
   double width;
   double height;
   TextStyle textStyle;
+  int number=0;
 
   VerticalText(
-    {@required this.text,
-     @required this.textStyle,
-     @required this.width,
-     @required this.height,
-    });
+      {@required this.text,
+        @required this.textStyle,
+        @required this.width,
+        @required this.height,
+      });
 
 
   @override
@@ -28,24 +29,30 @@ class VerticalText extends CustomPainter{
 
     maxWidth = findMaxWidth(text,textStyle);
 
-    
+
 
     text.runes.forEach((rune){
       String str = new String.fromCharCode(rune);
       TextSpan span = new TextSpan(style: textStyle,text: str);
       TextPainter tp = new TextPainter(
-        text: span,
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr
+          text: span,
+          textAlign: TextAlign.center,
+          textDirection: TextDirection.ltr
       );
       tp.layout();
-
-      if(offsetY + tp.height > height){
+      if(text.substring(number,number+1)==" "){
+        print(number);
         newLine = true;
         offsetY = 0;
       }
+////  if(offsetY + tp.height > height){
+//        print("newLine");
+//        newLine = true;
+//        offsetY = 0;
+//      }
 
       if(newLine){
+//        print("newLine");
         offsetX -= maxWidth;
         newLine = false;
       }
@@ -56,9 +63,10 @@ class VerticalText extends CustomPainter{
 
       tp.paint(canvas, new Offset(offsetX, offsetY));
       offsetY += tp.height;
+      number+=1;
     });
   }
-
+//
 
 
   double findMaxWidth(String text, TextStyle style) {
@@ -68,9 +76,9 @@ class VerticalText extends CustomPainter{
       String str = new String.fromCharCode(rune);
       TextSpan span = new TextSpan(style: style,text: str);
       TextPainter tp = new TextPainter(
-        text: span,
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr
+          text: span,
+          textAlign: TextAlign.center,
+          textDirection: TextDirection.ltr
       );
       tp.layout();
       maxWidth = max(maxWidth,tp.width);
@@ -89,7 +97,7 @@ class VerticalText extends CustomPainter{
 
   double max(double a, double b) {
     if(a > b){
-        return a;
+      return a;
     }else{
       return b;
     }
