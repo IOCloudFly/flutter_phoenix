@@ -86,7 +86,7 @@ class _TabNavigatorState extends State<TabNavigator> {
                 Icons.ondemand_video,
                 color: _defaultColor,
               ),
-              activeIcon: Icon(Icons.event_note,color: _activeColor),
+              activeIcon: Icon(Icons.ondemand_video,color: _activeColor),
               title: Text(
                 '开眼',
                 style: TextStyle(
