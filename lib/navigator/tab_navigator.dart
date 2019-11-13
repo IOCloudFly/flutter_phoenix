@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/net/http_utils.dart';
 import 'package:flutter_phoenix/pages/home_page.dart';
+import 'package:flutter_phoenix/pages/openeye_page.dart';
 import 'package:flutter_phoenix/pages/poetry_page.dart';
 import 'package:flutter_phoenix/pages/time_page.dart';
 import 'package:flutter_phoenix/pages/travel_page.dart';
@@ -18,7 +20,12 @@ class _TabNavigatorState extends State<TabNavigator> {
   final PageController _pageController = PageController(
     initialPage: 0,
   );
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getToken();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +35,9 @@ class _TabNavigatorState extends State<TabNavigator> {
             HomePage(),
             TimeClockPage(),
             TravelPage(),
+            OpenEyePage(),
             PoetryPage(),
+
           ],
           physics: NeverScrollableScrollPhysics(),
         ),
@@ -73,6 +82,17 @@ class _TabNavigatorState extends State<TabNavigator> {
                       color: _currentIndex != 2 ? _defaultColor : _activeColor),
                 )),
             BottomNavigationBarItem(
+              icon: Icon(
+                Icons.ondemand_video,
+                color: _defaultColor,
+              ),
+              activeIcon: Icon(Icons.event_note,color: _activeColor),
+              title: Text(
+                '开眼',
+                style: TextStyle(
+                  color: _currentIndex != 3 ? _defaultColor : _activeColor),
+              )),
+            BottomNavigationBarItem(
                 icon: Icon(
                   Icons.event_note,
                   color: _defaultColor,
@@ -81,9 +101,18 @@ class _TabNavigatorState extends State<TabNavigator> {
                 title: Text(
                   '句读',
                   style: TextStyle(
-                      color: _currentIndex != 3 ? _defaultColor : _activeColor),
+                      color: _currentIndex != 4 ? _defaultColor : _activeColor),
                 ))
           ],
         ));
+  }
+
+  Future getToken() async {
+  try{
+
+    var token= await HttpUtils .getInstance().getToken();
+    HttpUtils.getInstance().token = token;
+  }catch(e){}
+
   }
 }
