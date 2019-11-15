@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter_phoenix/dao/home_dao.dart';
+import 'package:flutter_phoenix/net/home_dao.dart';
 import 'package:flutter_phoenix/home/bean/home_bean_entity.dart';
-import 'package:flutter_phoenix/home/customIcons.dart';
 import 'dart:math';
 
 import 'package:flutter_phoenix/home/data.dart';

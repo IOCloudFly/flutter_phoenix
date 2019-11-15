@@ -1,19 +1,15 @@
-import 'dart:io';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_phoenix/home/bean/home_bean_entity.dart';
 import 'package:flutter_phoenix/home/bean/poetry_bean_entity.dart';
 
 class HttpApiError {
-  final String status;
+  final int code;
   final String errMessage;
 
-  HttpApiError({this.status, this.errMessage});
+  HttpApiError({this.code, this.errMessage});
 }
 
 class HttpUtils {
@@ -73,10 +69,10 @@ class HttpUtils {
   Future<T> _getData<T>(
       Future<Response<Map>> res, T Function(dynamic json) formJson) async {
     Response<Map> map = await res;
-    String status = map.data['status'];
+    int code = map.data['code'];
     String errMessage = map.data['errMessage'];
 
-    if (status == "success") {
+    if (0 == code ) {
       if (null == formJson) {
         return Future.value(null);
       }
@@ -87,7 +83,7 @@ class HttpUtils {
       return Future.value(null);
     }
 
-    return Future.error(HttpApiError(status: status, errMessage: errMessage));
+    return Future.error(HttpApiError(code : code, errMessage: errMessage));
   }
 
   /// 每日诗词 Token
@@ -99,7 +95,7 @@ class HttpUtils {
   /// 每日诗词 PoetryBeanEntity
   Future<PoetryBeanData > getSentence() {
     var res = _dio.get<Map>("sentence");
-    return _getData<  PoetryBeanData>(res, (data) =>PoetryBeanData.fromJson(data));
+    return _getData<PoetryBeanData>(res, (data) =>PoetryBeanData.fromJson(data));
   }
 
 
