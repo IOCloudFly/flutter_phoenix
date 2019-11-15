@@ -1,4 +1,4 @@
-# (Flutter_phoenix)
+# Flutter_phoenix
 
 ## 首页
  每次加载八张bing壁纸，可以滑动，但是有个问题，图片是倒序排列，我不清楚如何着手解决。
