@@ -1,11 +1,5 @@
- 我想做一个开源的练手demo,里面大致有几个分类
- 首页:放上每日Bing图片，一个滑动的卡片，大概八张。
+ @[TOC](Flutter_phoenix)
 
-
-
- 时钟:网上看到一个不错的钟表UI
- 旅拍:一些旅游图片
- 开眼:不错的视频
- 句读：每日一句古诗词
- 
+# 首页
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20191115150900228.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0xpdXl1bnNvbG8=,size_16,color_FFFFFF,t_70)
  
