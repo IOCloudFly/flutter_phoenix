@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:async';
 
 import 'package:flutter_phoenix/home/bean/eye_bean_entity.dart';
+import 'package:flutter_phoenix/home/bean/eye_open_bean.dart';
 
 class OpenEyeDaoError{
   final int code;
@@ -30,6 +31,9 @@ class OpenEyeDao{
     _dio.options.baseUrl = "http://baobab.kaiyanapp.com/";
     _dio.options.connectTimeout = 5000;
     _dio.options.receiveTimeout = 3000;
+    _dio.options.headers = {
+      'user-agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
+    };
     
     _dio.interceptors.add(CookieManager(CookieJar()));
     _dio.interceptors.add(InterceptorsWrapper(
@@ -61,25 +65,25 @@ class OpenEyeDao{
   Future<T> _getData<T>(
       Future<Response<Map>> res,T Function(dynamic json) fromJson) async{
       Response<Map> map = await res;
-      int code = map.data['code'];
-      String errMessage = map.data['errMessage'];
+//      int code = map.data['code'];
+//      String errMessage = map.data['errMessage'];
 
-      if(0 == code){
+      if(200 == map.statusCode){
         if(null == fromJson){
           return Future.value(null);
         }
         var data = map.data['issueList'];
-        if(null == map.data['issueList']){
+        if(null != fromJson && null != data){
           return Future.value(fromJson(data));
         }
         return Future.value(null);
       }
-      return Future.error(OpenEyeDaoError(code : code,errMessage: errMessage));
+      return Future.error(OpenEyeDaoError(code : map.statusCode,errMessage: map.statusMessage));
   }
 
-  Future<OpenEyeBeanEntity> getEyeBean(){
+  Future<ItemList> getEyeBean(){
     var res = _dio.get<Map>('api/v2/feed?num=1');
-    return _getData<OpenEyeBeanEntity>(res, (data)=>OpenEyeBeanEntity.fromJson(data));
+    return _getData<ItemList>(res, (data)=>ItemList.fromJson(data));
   }
 
 }

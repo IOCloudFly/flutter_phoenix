@@ -6,10 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_phoenix/home/bean/poetry_bean_entity.dart';
 
 class HttpApiError {
-  final int code;
+  final String status;
   final String errMessage;
 
-  HttpApiError({this.code, this.errMessage});
+  HttpApiError({this.status, this.errMessage});
 }
 
 class HttpUtils {
@@ -69,10 +69,10 @@ class HttpUtils {
   Future<T> _getData<T>(
       Future<Response<Map>> res, T Function(dynamic json) formJson) async {
     Response<Map> map = await res;
-    int code = map.data['code'];
+    String status = map.data['status'];
     String errMessage = map.data['errMessage'];
 
-    if (0 == code ) {
+    if ("success" == status ) {
       if (null == formJson) {
         return Future.value(null);
       }
@@ -83,7 +83,7 @@ class HttpUtils {
       return Future.value(null);
     }
 
-    return Future.error(HttpApiError(code : code, errMessage: errMessage));
+    return Future.error(HttpApiError(status : status, errMessage: errMessage));
   }
 
   /// 每日诗词 Token

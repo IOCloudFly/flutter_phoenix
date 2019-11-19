@@ -1,8 +1,12 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/home/bean/eye_bean_entity.dart';
+import 'package:flutter_phoenix/home/bean/eye_open_bean.dart';
 import 'package:flutter_phoenix/net/openeye_dao.dart';
 import 'package:provider/provider.dart';
 
+///开眼page
 class OpenEyePage extends StatefulWidget {
   @override
   _OpenEyePageState createState() => _OpenEyePageState();
@@ -10,7 +14,9 @@ class OpenEyePage extends StatefulWidget {
 
 class _OpenEyePageState extends State<OpenEyePage> {
 
-  OpenEyeBeanEntity _openEyeBeanEntity;
+  EyeOpenBean eyeOpenBean;
+  IssueList  issueList;
+  List<ItemList> itemList = [];
   String openeye = " ";
 
   @override
@@ -23,8 +29,7 @@ class _OpenEyePageState extends State<OpenEyePage> {
   Future _getOpenEye() async{
     var value = await OpenEyeDao.getInstance().getEyeBean();
     setState(() {
-      _openEyeBeanEntity = value;
-      openeye = value.toString();
+      //itemList = value;
     });
 
   }
@@ -32,9 +37,10 @@ class _OpenEyePageState extends State<OpenEyePage> {
   Widget build(BuildContext context) {
 
     return Container(
+
       child: Center(
         child: Text(
-          '开眼看世界'
+          openeye,
         ),
       ),
     );

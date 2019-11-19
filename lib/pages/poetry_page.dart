@@ -125,6 +125,7 @@ class _PoetryPageState extends State<PoetryPage> {
             painter: VerticalText(
               text: poetryListBean?.content?.replaceAll("，", " ")
                   ?.replaceAll("。", " ")
+                  ?.replaceAll("！", " ")
                   ?.replaceAll("？", " ")??'',
               textStyle: TextStyle(
                 color: Colors.black,
