@@ -66,7 +66,7 @@ class _OpenEyePageState extends State<OpenEyePage> {
       ),
       body: Center(
         child: Text(
-        null==openData?'':  openData.issueList[0].itemList[1].data.title
+        null==openData?'':  openData.issueList[0].itemList[1].data.author.name
         ),
       ),
       

@@ -44,8 +44,74 @@ class _TravelPageState extends State<TravelPage> {
           itemImage(),
 
           Container(
+            margin: EdgeInsets.only(left: 15,right: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                ///头像
+                ClipOval(
+                  child: GestureDetector(
+                    onTap: (){
 
+                    },
+                    child: CachedNetworkImage( //图片缓存
+                      imageUrl: 'http://img.kaiyanapp.com/af3ca29c0c9528f9134630613c1ec1c5.jpeg?imageMogr2/quality/60/format/jpg',
+                      width: 40,
+                      height: 40,
+                      placeholder: (context,url) => CircularProgressIndicator( //圆形进度条
+                        strokeWidth: 2.5,
+                        backgroundColor: Colors.deepPurple[600],
+                      ),
+                    ),
+                  ),
+                ),
+                ///平铺填充
+                Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10,right: 15,top: 10,bottom: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '里斯本寻鸭记：这里这么美，我要去看看',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                            ),
+                          ),
+                          Padding(padding: EdgeInsets.only(top: 2,bottom: 2)),
+                          Text(
+                            '开眼旅行精选',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  flex: 1,
+                ),
+                //分享
+                GestureDetector(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.thumb_up,
+                      size: 18,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  onTap: (){
 
+                  },
+                )
+              ],
+            ),
           ),
         ],
       ),

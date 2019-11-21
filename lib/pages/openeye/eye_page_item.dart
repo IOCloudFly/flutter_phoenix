@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/home/bean/eye_open_bean.dart';
 
@@ -42,7 +43,74 @@ class EyePageItem extends StatelessWidget {
           itemImage(),
 
           Container(
+            margin: EdgeInsets.only(left: 15,right: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                  ///头像
+                  ClipOval(
+                    child: GestureDetector(
+                      onTap: (){
 
+                      },
+                      child: CachedNetworkImage( //图片缓存
+                        imageUrl: itemList.data.author.icon,
+                        width: 40,
+                        height: 40,
+                        placeholder: (context,url) => CircularProgressIndicator( //圆形进度条
+                          strokeWidth: 2.5,
+                          backgroundColor: Colors.deepPurple[600],
+                        ),
+                      ),
+                    ),
+                  ),
+                  ///平铺填充
+                  Expanded(
+                      child: Padding(
+                          padding: EdgeInsets.only(left: 10,right: 15,top: 10,bottom: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                itemList.data.title,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Padding(padding: EdgeInsets.only(top: 2,bottom: 2)),
+                              Text(
+                                itemList.data.author.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              )
+                            ],
+                          ),
+                      ),
+                    flex: 1,
+                  ),
+                  //分享
+                  GestureDetector(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.thumb_up,
+                        size: 18,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    onTap: (){
+
+                    },
+                  )
+              ],
+            ),
           ),
         ],
       ),
