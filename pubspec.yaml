@@ -60,6 +60,7 @@ flutter:
     - assets/image_02.jpg
     - assets/image_03.jpg
     - assets/image_04.jpg
+    - assets/img_load_fail.png
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

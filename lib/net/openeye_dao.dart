@@ -81,10 +81,17 @@ class OpenEyeDao{
       return Future.error(OpenEyeDaoError(code : map.statusCode,errMessage: map.statusMessage));
   }
 
-  Future<ItemList> getEyeBean(){
-    var res = _dio.get<Map>('api/v2/feed?num=1');
-    return _getData<ItemList>(res, (data)=>ItemList.fromJson(data));
-  }
+//  Future<List<ItemList>> getEyeBean(){
+//    var res = _dio.get<Map>('api/v2/feed?num=1');
+//    return _getData<List<ItemList>>(res, (data)=>ItemList.fromJson(data));
+//  }
+    //如果没有状态码之类的，就直接请求返回数据
+    Future<EyeOpenBean> getEyeBean() async{
+      var res = await _dio.get<Map>('api/v2/feed?num=1');
+      return EyeOpenBean.fromJson(res.data);
+    }
+
+
 
 }
 

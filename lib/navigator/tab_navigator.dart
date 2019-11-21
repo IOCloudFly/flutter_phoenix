@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/net/http_utils.dart';
 import 'package:flutter_phoenix/pages/home_page.dart';
-import 'package:flutter_phoenix/pages/openeye_page.dart';
+import 'package:flutter_phoenix/pages/openeye/openeye_page.dart';
 import 'package:flutter_phoenix/pages/poetry_page.dart';
 import 'package:flutter_phoenix/pages/time_page.dart';
 import 'package:flutter_phoenix/pages/travel_page.dart';
