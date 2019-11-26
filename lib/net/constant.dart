@@ -1,8 +1,8 @@
-class Constant{
+class ConstantUrl{
 
   static final baseUrl = 'http://baobab.kaiyanapp.com/';
 
-  static final openeyeUrl = '${baseUrl}api/v2/feed?num=1';
+  static final openeyePageUrl = '${baseUrl}api/v2/feed?num=1';
 
 
 

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_phoenix/home/bean/poetry_bean_entity.dart';
 import 'package:flutter_phoenix/net/http_utils.dart';
 import 'package:flutter_phoenix/tools/vertical_text.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PoetryPage extends StatefulWidget {
   @override
