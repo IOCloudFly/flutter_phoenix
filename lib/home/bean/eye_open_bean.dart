@@ -161,7 +161,7 @@ class Data {
   bool played;
   Null lastViewTime;
   Null playlists;
-  Null src;
+  String src;
 
   Data(
       {this.dataType,

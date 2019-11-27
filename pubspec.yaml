@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   #json解析
   json_serializable: ^3.0.0
+  # 下拉刷新、上拉加载
+  flutter_easyrefresh: ^2.0.4
   build_runner: ^1.6.1
 dev_dependencies:
   flutter_test:

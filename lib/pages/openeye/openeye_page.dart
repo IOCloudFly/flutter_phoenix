@@ -2,11 +2,15 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_phoenix/pages/openeye/eye_page_item.dart';
+import 'package:flutter_phoenix/pages/openeye/time_title_item.dart';
 //import 'package:flutter_phoenix/home/bean/eye_open_bean.dart';
 import 'package:flutter_phoenix/provider/openeye_page_model.dart';
 import 'package:flutter_phoenix/provider/provider_widget.dart';
 import 'package:flutter_phoenix/utils/loading_widget.dart';
+import 'package:flutter_phoenix/utils/refresh/load_more_footer.dart';
+import 'package:flutter_phoenix/utils/refresh/refresh_header.dart';
 import 'package:provider/provider.dart';
 
 
@@ -32,7 +36,7 @@ class _OpenEyePageState extends State<OpenEyePage>
     return ProviderWidget<OpenEyePageModel>(
         model: OpenEyePageModel(),
         onModelInitial: (model) {
-          //model
+          model.init();
         },
         builder: (context, model, child) {
           return Scaffold(
@@ -58,7 +62,25 @@ class _OpenEyePageState extends State<OpenEyePage>
                 ],
               ),
               body: Container(
-                child: OpenEyeListWidget(),
+                color: Color(0xFFF4F4F4),
+                child: EasyRefresh.custom(
+                    enableControlFinishRefresh: true,
+                    enableControlFinishLoad: true,
+                    taskIndependence: true,
+                    header: MyClassicalHeader(enableInfiniteRefresh: false),
+                    footer: MyClassicalFooter(enableInfiniteLoad: false),
+                    controller: model.controller,
+                    scrollController: model.scrollController,
+                    onRefresh: model.onRefresh,
+                    onLoad: model.onLoadMore,
+                    slivers: <Widget>[
+                      SliverToBoxAdapter(
+                        child: Container(
+                          child: OpenEyeListWidget(),
+                        ),
+                      )
+                    ]
+                ),
               )
           );
         }
@@ -76,26 +98,35 @@ class OpenEyeListWidget extends StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
     OpenEyePageModel model = Provider.of(context);
-//    if(model.isInit){
-//      return LoadingWidget();
-//    }
+    if(model.isInit){
+      return LoadingWidget();
+    }
     return ListView.separated(
         shrinkWrap: true,
         physics: BouncingScrollPhysics(),
         itemBuilder: (context,index){
             var item = model.itemList[index];
+            if(item.type == 'textHeader'){
+              return TimeTitleItem(timeTitle: item.data.src,);
+            }
             return EyePageItem(itemList:item);
         },
         separatorBuilder: (context,index){
-          //var item = model.itemList[index];
-          return index % 2 == 0
-              ? Divider(color: Colors.blue)
-              : Divider(color: Colors.red);
+          var item = model.itemList[index];
+          var itemNext = model.itemList[index + 1];
+          if(item.type == 'textHeader' || itemNext.type == 'textHeader'){
+            return Divider(
+              height: 0,
+              color: Color(0xFFF4F4F4),
+            );
+          }
+          return Divider(
+            height: 10,
+            color: Color(0xFFF4F4F4),
+          );
         },
         itemCount: model.itemList.length,
     );
   }
-
-
 }
 
