@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/home/bean/eye_open_bean.dart';
+import 'package:flutter_phoenix/home/bean/eye_bean_entity.dart';
+
 
 ///视频每个item 的UI部门
 /// 时间，标题，标签，头像，视频图片
@@ -9,9 +10,9 @@ import 'package:flutter_phoenix/home/bean/eye_open_bean.dart';
 
 class EyePageItem extends StatelessWidget {
 
-  final ItemList itemList;
+  final Item item;
 
-  const EyePageItem({Key key, this.itemList}) : super(key: key);
+  const EyePageItem({Key key, this.item}) : super(key: key);
 
   ///把视频时长duration转为时分秒
   String formatDuration(duration){
@@ -55,7 +56,7 @@ class EyePageItem extends StatelessWidget {
 
                       },
                       child: CachedNetworkImage( //图片缓存
-                        imageUrl: itemList.data.author.icon,
+                        imageUrl: item.data.author.icon,
                         width: 40,
                         height: 40,
                         placeholder: (context,url) => CircularProgressIndicator( //圆形进度条
@@ -73,7 +74,7 @@ class EyePageItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                itemList.data.title,
+                                item.data.title,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -83,7 +84,7 @@ class EyePageItem extends StatelessWidget {
                               ),
                               Padding(padding: EdgeInsets.only(top: 2,bottom: 2)),
                               Text(
-                                itemList.data.author.name,
+                                item.data.author.name,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -142,7 +143,7 @@ class EyePageItem extends StatelessWidget {
             width: double.infinity,
             fit: BoxFit.cover,
             ///视频图片
-            imageUrl: itemList.data.cover.feed,
+            imageUrl: item.data.cover.feed,
             errorWidget: (context,url,error) =>
                 Image.asset('assets/img_load_fail.png'),
           ),
@@ -175,7 +176,7 @@ class EyePageItem extends StatelessWidget {
                       padding: EdgeInsets.all(5),
                       child: Text(
                         //标签
-                        itemList.data.category,
+                        item.data.category,
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.white,
@@ -202,7 +203,7 @@ class EyePageItem extends StatelessWidget {
                     child: Padding(
                         padding: EdgeInsets.all(3),
                         child: Text(
-                          formatDuration(itemList.data.duration),
+                          formatDuration(item.data.duration),
                           style: TextStyle(
                             fontSize: 10,
                             color: Colors.white,

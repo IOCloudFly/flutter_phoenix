@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_phoenix/home/bean/eye_bean_entity.dart';
 import 'package:flutter_phoenix/home/bean/eye_open_bean.dart';
 import 'package:flutter_phoenix/net/constant.dart';
 import 'package:flutter_phoenix/net/respository_eye.dart';
@@ -14,8 +15,8 @@ class OpenEyePageModel extends ChangeNotifier {
   String nextPageUrl;
   bool isRefresh = true;
 
-  List<ItemList> itemList = [];
-  List<ItemList> bannerList = [];
+  List<Item> itemList = [];
+  List<Item> bannerList = [];
   bool isInit;
 
   ///初始化
@@ -29,13 +30,13 @@ class OpenEyePageModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<ItemList>> loadBanner() async {
+  Future<List<Item>> loadBanner() async {
     try {
       var response =
           await EyeRespository.getOpenEyePageList(ConstantUrl.openeyePageUrl);
       debugPrint('--------$response');
       Map map = json.decode(response.toString());
-      var issueEntity = EyeOpenBean.fromJson(map);
+      var issueEntity = IssueEntity.fromJson(map);
       nextPageUrl = issueEntity.nextPageUrl;
       await loadData(url: nextPageUrl);
       var list = issueEntity.issueList[0].itemList;
@@ -43,8 +44,7 @@ class OpenEyePageModel extends ChangeNotifier {
       list.removeWhere((item) {
         return item.type == 'banner2';
       });
-      bannerList.clear();
-      bannerList.addAll(list);
+      bannerList = list;
       return bannerList;
     } catch (e) {
       return null;
@@ -52,12 +52,13 @@ class OpenEyePageModel extends ChangeNotifier {
   }
 
   ///加载数据
-  Future<List<ItemList>> loadData({String url}) async {
+  Future<List<Item>> loadData({String url}) async {
     try {
       var response =
           await EyeRespository.getOpenEyePageList(url);
+      print(response.toString());
       Map map = json.decode(response.toString());
-      var issueEntity = EyeOpenBean.fromJson(map);
+      var issueEntity = IssueEntity.fromJson(map);
       nextPageUrl = issueEntity.nextPageUrl;
       var list = issueEntity.issueList[0].itemList;
       list.removeWhere((item) {
@@ -91,13 +92,13 @@ class OpenEyePageModel extends ChangeNotifier {
   }
 
   ///上拉刷新
-  Future<List<ItemList>> onRefresh() async{
+  Future<List<Item>> onRefresh() async{
     isRefresh = true;
     return await loadData(url: ConstantUrl.openeyePageUrl);
   }
 
   ///下拉加载
-  Future<List<ItemList>> onLoadMore() async{
+  Future<List<Item>> onLoadMore() async{
     isRefresh = false;
     return await loadData(url: nextPageUrl);
   }

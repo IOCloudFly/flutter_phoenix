@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/home/bean/eye_open_bean.dart';
-import 'package:flutter_phoenix/tools/vertical_text.dart';
+import 'package:flutter_phoenix/net/openeye_dao.dart';
 
 class TravelPage extends StatefulWidget {
   @override
@@ -10,9 +10,8 @@ class TravelPage extends StatefulWidget {
 
 class _TravelPageState extends State<TravelPage> {
 
-  final ItemList itemList;
+  EyeOpenBean eyeOpenBean;
 
-  _TravelPageState({Key key, this.itemList});
 
   ///把视频时长duration转为时分秒
   String formatDuration(duration){
@@ -33,6 +32,20 @@ class _TravelPageState extends State<TravelPage> {
       }
     }
     return str;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getOpen();
+  }
+
+  Future _getOpen() async{
+    var value = await OpenEyeDao.getInstance().getEyeBean();
+    setState(() {
+      eyeOpenBean = value;
+    });
   }
 
   @override
@@ -74,7 +87,7 @@ class _TravelPageState extends State<TravelPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            '里斯本寻鸭记：这里这么美，我要去看看',
+                            null==eyeOpenBean?'' : eyeOpenBean.issueList[0].itemList[1].data.title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
